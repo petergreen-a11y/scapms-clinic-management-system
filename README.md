@@ -1,4 +1,4 @@
-# SCAPMS — COS202 Programming II Lab Assessment
+# SCAPMS  COS202 Programming II Lab Assessment
 
 This C++17 / Qt Widgets project implements the required Smart Clinic Appointment & Patient Management System.
 
