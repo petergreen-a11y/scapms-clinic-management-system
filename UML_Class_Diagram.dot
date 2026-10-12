@@ -1,0 +1,88 @@
+digraph SCAPMS {
+  graph [rankdir=TB, splines=ortho, nodesep=0.35, ranksep=0.7, pad=0.2, bgcolor="white", fontname="Arial", labelloc="t", label="SCAPMS UML Class Diagram", fontsize=20];
+  node [shape=plain, fontname="Arial", fontsize=9];
+  edge [fontname="Arial", fontsize=8, color="#334155", arrowsize=0.8];
+
+  PatientRecord [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#dbeafe"><I>abstract</I><BR/><B>PatientRecord</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- id : string<BR ALIGN="LEFT"/>- name : string<BR ALIGN="LEFT"/>- age : int<BR ALIGN="LEFT"/>- contact : string</TD></TR>
+      <TR><TD ALIGN="LEFT">+ category() : string {abstract}<BR ALIGN="LEFT"/>+ careDescription() : string {abstract}<BR ALIGN="LEFT"/>+ clone() : unique_ptr {abstract}</TD></TR>
+    </TABLE>>];
+
+  Appointable [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#ede9fe"><I>abstract interface</I><BR/><B>Appointable</B></TD></TR>
+      <TR><TD ALIGN="LEFT">+ scheduleAppointment(id, dateTime)<BR ALIGN="LEFT"/>+ cancelAppointment(id) : bool</TD></TR>
+    </TABLE>>];
+
+  GeneralPatient [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#dcfce7"><B>GeneralPatient</B></TD></TR>
+      <TR><TD ALIGN="LEFT">+ category() : string<BR ALIGN="LEFT"/>+ careDescription() : string<BR ALIGN="LEFT"/>+ clone() : unique_ptr</TD></TR>
+    </TABLE>>];
+  EmergencyPatient [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#fee2e2"><B>EmergencyPatient</B></TD></TR>
+      <TR><TD ALIGN="LEFT">+ category() : string<BR ALIGN="LEFT"/>+ careDescription() : string<BR ALIGN="LEFT"/>+ clone() : unique_ptr</TD></TR>
+    </TABLE>>];
+  FollowUpPatient [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#fef3c7"><B>FollowUpPatient</B></TD></TR>
+      <TR><TD ALIGN="LEFT">+ category() : string<BR ALIGN="LEFT"/>+ careDescription() : string<BR ALIGN="LEFT"/>+ clone() : unique_ptr</TD></TR>
+    </TABLE>>];
+
+  Appointment [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#e0f2fe"><B>Appointment</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- id : string<BR ALIGN="LEFT"/>- patientId : string<BR ALIGN="LEFT"/>- dateTime : string<BR ALIGN="LEFT"/>- status : string</TD></TR>
+      <TR><TD ALIGN="LEFT">+ setStatus(status)</TD></TR>
+    </TABLE>>];
+
+  ClinicDatabase [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#e2e8f0"><B>ClinicDatabase</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- vector&lt;PatientRecord&gt; patients<BR ALIGN="LEFT"/>- vector&lt;Appointment&gt; appointments</TD></TR>
+      <TR><TD ALIGN="LEFT">+ add/find/delete patient<BR ALIGN="LEFT"/>+ add/find/delete appointment</TD></TR>
+    </TABLE>>];
+
+  ClinicManager [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#e2e8f0"><B>ClinicManager</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- queue&lt;string&gt; waiting queue<BR ALIGN="LEFT"/>- stack&lt;UndoAction&gt; undo<BR ALIGN="LEFT"/>- array&lt;PatientRecord*,10&gt; cache</TD></TR>
+      <TR><TD ALIGN="LEFT">+ patient / appointment operations<BR ALIGN="LEFT"/>+ undo() : bool</TD></TR>
+    </TABLE>>];
+
+  SearchEngine [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#f1f5f9"><B>SearchEngine</B></TD></TR>
+      <TR><TD ALIGN="LEFT">+ linearById()<BR ALIGN="LEFT"/>+ binaryById()<BR ALIGN="LEFT"/>+ recursiveByName()<BR ALIGN="LEFT"/>+ insertionSort()<BR ALIGN="LEFT"/>+ mergeSort()</TD></TR>
+    </TABLE>>];
+
+  FileHandler [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#f1f5f9"><B>FileHandler</B></TD></TR>
+      <TR><TD ALIGN="LEFT">+ save(database, path)<BR ALIGN="LEFT"/>+ load(database, path)</TD></TR>
+    </TABLE>>];
+
+  MainWindow [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#dbeafe"><B>MainWindow</B></TD></TR>
+      <TR><TD ALIGN="LEFT">- ClinicManager manager</TD></TR>
+      <TR><TD ALIGN="LEFT">+ dashboard and tabs<BR ALIGN="LEFT"/>+ patient / appointment actions<BR ALIGN="LEFT"/>+ search, sort and reports</TD></TR>
+    </TABLE>>];
+
+  PatientRecord -> GeneralPatient [arrowhead=empty, dir=back, label="inherits"];
+  PatientRecord -> EmergencyPatient [arrowhead=empty, dir=back, label="inherits"];
+  PatientRecord -> FollowUpPatient [arrowhead=empty, dir=back, label="inherits"];
+  Appointable -> GeneralPatient [arrowhead=empty, dir=back, style=dashed, label="implements"];
+  Appointable -> EmergencyPatient [arrowhead=empty, dir=back, style=dashed];
+  Appointable -> FollowUpPatient [arrowhead=empty, dir=back, style=dashed];
+  ClinicDatabase -> PatientRecord [dir=back, arrowtail=odiamond, arrowhead=none, label="owns 0..*"];
+  ClinicDatabase -> Appointment [dir=back, arrowtail=odiamond, arrowhead=none, label="stores 0..*"];
+  Appointment -> PatientRecord [arrowhead=vee, label="patientId association"];
+  ClinicManager -> ClinicDatabase [arrowhead=vee, label="coordinates"];
+  ClinicManager -> SearchEngine [arrowhead=vee, label="uses"];
+  FileHandler -> ClinicDatabase [arrowhead=vee, label="loads/saves"];
+  MainWindow -> ClinicManager [arrowhead=vee, label="uses"];
+}

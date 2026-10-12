@@ -1,0 +1,57 @@
+classDiagram
+class PatientRecord {
+  <<abstract>>
+  -string id
+  -string name
+  -int age
+  -string contact
+  +category()* string
+  +careDescription()* string
+  +clone()* unique_ptr
+}
+class Appointable {
+  <<interface-like abstract>>
+  +scheduleAppointment(id, dateTime)*
+  +cancelAppointment(id)*
+}
+class GeneralPatient
+class EmergencyPatient
+class FollowUpPatient
+class Appointment {
+  -string id
+  -string patientId
+  -string dateTime
+  -string status
+}
+class ClinicDatabase {
+  -vector~PatientRecord~ patients
+  -vector~Appointment~ appointments
+}
+class ClinicManager {
+  -queue~string~ waitingQueue
+  -stack~UndoAction~ undoStack
+  -array~PatientRecord*,10~ recentCache
+}
+class SearchEngine {
+  +linearById()
+  +binaryById()
+  +recursiveByName()
+  +insertionSort()
+  +mergeSort()
+}
+class FileHandler {
+  +save()
+  +load()
+}
+PatientRecord <|-- GeneralPatient
+PatientRecord <|-- EmergencyPatient
+PatientRecord <|-- FollowUpPatient
+Appointable <|.. GeneralPatient
+Appointable <|.. EmergencyPatient
+Appointable <|.. FollowUpPatient
+ClinicDatabase o-- PatientRecord
+ClinicDatabase o-- Appointment
+Appointment --> PatientRecord : patientId association
+ClinicManager --> ClinicDatabase
+ClinicManager --> SearchEngine
+FileHandler --> ClinicDatabase
