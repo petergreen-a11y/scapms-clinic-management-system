@@ -1,0 +1,9 @@
+SCAPMS1
+P|1|johndoe|67|499 jcdj|Emergency
+P|P001|Ada Okafor|28|08030000001|General
+P|P002|David Belo|45|08030000002|Emergency
+P|P003|Samuel James|56|08030000003|Follow-Up
+A|A001|1|2026-10-12 14:33|Pending
+A|A002|1|2026-10-12 14:30|Completed
+A|A003|P002|2026-10-12 14:34|Pending
+A|A004|P003|2027-10-20 14:34|Pending

@@ -1,0 +1,5 @@
+C:/Users/HP/Documents/SCAPMS/build/Desktop_Qt_6_12_0_MinGW_64_bit_Debug/CMakeFiles/SCAPMS.dir
+C:/Users/HP/Documents/SCAPMS/build/Desktop_Qt_6_12_0_MinGW_64_bit_Debug/CMakeFiles/edit_cache.dir
+C:/Users/HP/Documents/SCAPMS/build/Desktop_Qt_6_12_0_MinGW_64_bit_Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/HP/Documents/SCAPMS/build/Desktop_Qt_6_12_0_MinGW_64_bit_Debug/CMakeFiles/SCAPMS_autogen_timestamp_deps.dir
+C:/Users/HP/Documents/SCAPMS/build/Desktop_Qt_6_12_0_MinGW_64_bit_Debug/CMakeFiles/SCAPMS_autogen.dir
